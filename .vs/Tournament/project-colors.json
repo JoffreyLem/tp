@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "bb7d42bf-6bdf-4e8f-b6be-51b06f431325": {
+      "ProjectGuid": "bb7d42bf-6bdf-4e8f-b6be-51b06f431325",
+      "DisplayName": "Tournaments.Tests",
+      "ColorIndex": 0
+    },
+    "c348d11d-1281-49e9-95f8-715c917149b6": {
+      "ProjectGuid": "c348d11d-1281-49e9-95f8-715c917149b6",
+      "DisplayName": "Tournaments",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

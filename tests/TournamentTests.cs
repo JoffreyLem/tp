@@ -109,12 +109,22 @@ namespace Tournaments.Tests
 
             var addParticipants = await TournamentUtils.AddEquipesToTournament(response.Content.Id, data
                 , _factory);
-            tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _factory);
-            Assert.Equal(HttpStatusCode.OK, tournamentResponse.StatusCode);
+            var tournament = addParticipants.Content;
+            Assert.Equal(HttpStatusCode.OK, addParticipants.StatusCode);
             Assert.NotNull(tournamentResponse.Content);
-            var tournament = tournamentResponse.Content;
+         
             Assert.NotNull(tournament.Equipes);
-            Assert.Equal(2, tournament.Equipes.Count);
+            Assert.Equal(1, tournament.Equipes.Count);
+
+
+            var removeParticipants =
+                await TournamentUtils.RemoveEquipeFromTournament(response.Content.Id, "Equipe1", _factory);
+            tournament = removeParticipants.Content;
+            Assert.Equal(HttpStatusCode.OK, addParticipants.StatusCode);
+            Assert.NotNull(tournamentResponse.Content);
+
+            Assert.NotNull(tournament.Equipes);
+            Assert.Equal(0, tournament.Equipes.Count);
         }
     }
 }
