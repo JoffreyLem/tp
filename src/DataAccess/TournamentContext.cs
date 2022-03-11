@@ -8,6 +8,8 @@ namespace Tournaments.DataAccess
 {
     public class TournamentContext : DbContext
     {
+
+
         public TournamentContext()
 
         {

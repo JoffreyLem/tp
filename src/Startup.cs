@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Tournaments.DataAccess;
 using Tournaments.Services;
+using Tournaments.Services.Tournament;
 
 namespace Tournaments
 {
@@ -48,8 +49,8 @@ namespace Tournaments
                 services.AddDbContext<TournamentContext>(options => options.UseInMemoryDatabase(databaseName: "Tournament"));
             }
 
-      
-      
+            services.AddSingleton<ITournamentRepository, TournamentRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

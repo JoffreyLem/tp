@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tournaments.DataAccess;
 
 namespace Tournaments.Migrations
 {
     [DbContext(typeof(TournamentContext))]
-    partial class TournamentContextModelSnapshot : ModelSnapshot
+    [Migration("20220311144616_initial migration1")]
+    partial class initialmigration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,12 +30,12 @@ namespace Tournaments.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TournamentId1")
+                    b.Property<string>("TournamentId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TournamentId1");
+                    b.HasIndex("TournamentId");
 
                     b.ToTable("Equipes");
                 });
@@ -71,7 +73,7 @@ namespace Tournaments.Migrations
                 {
                     b.HasOne("Tournaments.Model.Tournament", null)
                         .WithMany("Equipes")
-                        .HasForeignKey("TournamentId1");
+                        .HasForeignKey("TournamentId");
                 });
 
             modelBuilder.Entity("Tournaments.Model.Tournament", b =>

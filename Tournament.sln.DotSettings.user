@@ -3,4 +3,12 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::BB7D42BF-6BDF-4E8F-B6BE-51B06F431325::net5.0::Tournaments.Tests.TournamentTests.ADdParticipantsToTournament_should_retrieveAllParticipants&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ad84644b_002D4e55_002D4058_002D9428_002D19e2e00f0585/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="CreatedTournament_Should_EnableToRetrieveTournamentAfterwards" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::BB7D42BF-6BDF-4E8F-B6BE-51B06F431325::net5.0::Tournaments.Tests.TournamentTests.CreatedTournament_Should_EnableToRetrieveTournamentAfterwards&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BB7D42BF-6BDF-4E8F-B6BE-51B06F431325::net5.0::Tournaments.Tests.TournamentTests.AddEquipes_should_RetrieveEquipes&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BB7D42BF-6BDF-4E8F-B6BE-51B06F431325::net5.0::Tournaments.Tests.TournamentTests.RemoveEquipe_should_Retrieve0Equipes&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::BB7D42BF-6BDF-4E8F-B6BE-51B06F431325::net5.0::Tournaments.Tests.PingTests.Ping_Should_Return_200_OK&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

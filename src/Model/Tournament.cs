@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Tournaments.Model
@@ -25,5 +26,7 @@ namespace Tournaments.Model
 
         [JsonPropertyName("participants")]
         public List<Equipes> Equipes { get; set; }
+
+     
     }
 }

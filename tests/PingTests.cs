@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Tournaments.Tests.Utils;
@@ -6,19 +7,21 @@ using Xunit;
 
 namespace Tournaments.Tests
 {
-    public class PingTests
+    public class PingTests : IClassFixture<ClientUtils>
     {
-       
-
-        public PingTests(){
-           
+        private ClientUtils _clientUtils;
+        private HttpClient _client;
+        public PingTests(ClientUtils clientUtils)
+        {
+            _clientUtils = clientUtils;
+            _client = _clientUtils.Client;
         }
 
         [Fact]
         public async Task Ping_Should_Return_200_OK()
         {
-            var client = ClientUtils.GetClient(_factory);
-            var response = await client.GetAsync("/api/ping");
+          
+            var response = await _client.GetAsync("/api/ping");
 
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK,response.StatusCode);

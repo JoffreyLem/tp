@@ -6,16 +6,20 @@ namespace Tournaments.Tests.Utils
 {
     public class ClientUtils
     {
-
-
-        public static HttpClient GetClient()
+        public  HttpClient Client { get; set; }
+        public ClientUtils()
         {
             var app = new WebApplicationFactory<Startup>().WithWebHostBuilder(builder =>
             {
                 builder.UseEnvironment("test");
             });
-        
-            return app.CreateClient();
+           Client = app.CreateClient();
         }
+
+
+
+
+
+     
     }
 }
