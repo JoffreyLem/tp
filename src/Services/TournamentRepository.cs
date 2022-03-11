@@ -9,7 +9,12 @@ namespace Tournaments.Services
     public class TournamentRepository
     {
        
-        private static TournamentContext _context = new();
+        private  TournamentContext _context;
+
+        public TournamentRepository(TournamentContext context)
+        {
+            _context = context;
+        }
 
         public string CreateTournament(TournamentToCreate tournamentToCreate)
         {

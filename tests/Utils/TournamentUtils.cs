@@ -9,15 +9,14 @@ namespace Tournaments.Tests.Utils
 {
     public static class TournamentUtils
     {
-        public static async Task<Response<CreatedResponse>> CreateTournament(string tournamentName,
-            WebApplicationFactory<Startup> factory)
+        public static async Task<Response<CreatedResponse>> CreateTournament(string tournamentName)
         {
             var tournament = new TournamentToCreate
             {
                 Name = tournamentName
             };
-
-            var client = factory.CreateClient();
+            
+            var client = ClientUtils.GetClient();
             var response = await client.PostAsync("/api/tournaments",
                 new StringContent(JsonSerializer.Serialize(tournament), Encoding.UTF8, "application/json"));
 
@@ -29,10 +28,9 @@ namespace Tournaments.Tests.Utils
             return new Response<CreatedResponse>(response.StatusCode, content);
         }
         
-        public static async Task<Response<Tournament>> GetTournament(string tournamentId,
-            WebApplicationFactory<Startup> factory)
+        public static async Task<Response<Tournament>> GetTournament(string tournamentId)
         {
-            var client = factory.CreateClient();
+            var client = ClientUtils.GetClient();
             var response = await client.GetAsync($"/api/tournaments/{tournamentId}");
 
             Tournament tournament = null;
@@ -45,9 +43,9 @@ namespace Tournaments.Tests.Utils
             return new Response<Tournament>(response.StatusCode, tournament);
         }
 
-        public static async Task<Response<Tournament>> AddEquipesToTournament(string idTournament, ParticipantsToAdd participants, WebApplicationFactory<Startup> factory)
+        public static async Task<Response<Tournament>> AddEquipesToTournament(string idTournament, ParticipantsToAdd participants)
         {
-            var client = factory.CreateClient();
+            var client = ClientUtils.GetClient();
             HttpContent content = new StringContent(JsonSerializer.Serialize(participants), Encoding.UTF8,"application/json");
      
             var response = await client.PutAsync($"/api/tournaments/{idTournament}", content);
@@ -62,9 +60,9 @@ namespace Tournaments.Tests.Utils
         }
 
 
-        public static async Task<Response<Tournament>> RemoveEquipeFromTournament(string idTournament, string equipeName, WebApplicationFactory<Startup> factory)
+        public static async Task<Response<Tournament>> RemoveEquipeFromTournament(string idTournament, string equipeName)
         {
-            var client = factory.CreateClient();
+            var client = ClientUtils.GetClient();
             HttpContent content = new StringContent(JsonSerializer.Serialize(equipeName), Encoding.UTF8, "application/json");
 
             var response = await client.PutAsync($"/api/tournaments/removeEquipe/{idTournament}", content);
