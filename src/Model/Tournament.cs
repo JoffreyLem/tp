@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Tournaments.Model
@@ -10,6 +11,7 @@ namespace Tournaments.Model
             Equipes = new List<Equipes>();
         }
 
+        [Key]
         [JsonPropertyName("id")]
         public string Id { get; set; }
         [JsonPropertyName("name")]
