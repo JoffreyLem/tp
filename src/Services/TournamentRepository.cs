@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Tournaments.DataAccess;
 using Tournaments.Model;
 
 namespace Tournaments.Services
 {
     public class TournamentRepository
     {
-        private static Dictionary<string, Tournament> Tournaments = new();
+       
+        private static TournamentContext _context = new();
 
         public string CreateTournament(TournamentToCreate tournamentToCreate)
         {
             var id = Guid.NewGuid().ToString();
-            Tournaments.Add(id, new Tournament() {Id = id, Name = tournamentToCreate.Name});
+            var tournament = new Tournament(id,tournamentToCreate.Name);
+            _context.Tournaments.Add(tournament);
             return id;
         }
 
-        public Tournament GetTournament(string id)
+        public Tournament? GetTournament(string id)
         {
-            return Tournaments[id];
+            return _context.Tournaments.FirstOrDefault(x => x.Id==id);
         }
 
         

@@ -11,6 +11,12 @@ namespace Tournaments.Model
             Equipes = new List<Equipes>();
         }
 
+        public Tournament(string id, string name)
+        {
+            Id = id;
+           Name = name;
+        }
+
         [Key]
         [JsonPropertyName("id")]
         public string Id { get; set; }

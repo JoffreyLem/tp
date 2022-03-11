@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <Folder Include="DataAccess\Repository\" />
+      <Folder Include="Exception\" />
     </ItemGroup>
 
 </Project>
