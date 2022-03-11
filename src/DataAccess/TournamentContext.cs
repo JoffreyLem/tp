@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data.Common;
+using Effort;
+using Effort.Provider;
+using Microsoft.EntityFrameworkCore;
 using Tournaments.Model;
 
 namespace Tournaments.DataAccess
@@ -16,6 +19,8 @@ namespace Tournaments.DataAccess
 
         }
 
+    
+
         public DbSet<Equipes> Equipes { get; set; }
         public DbSet<Participants> Participants { get; set; }
         public DbSet<Tournament> Tournaments { get; set; }
@@ -23,7 +28,7 @@ namespace Tournaments.DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=Tournament;Trusted_Connection=True;");
-
+         
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
