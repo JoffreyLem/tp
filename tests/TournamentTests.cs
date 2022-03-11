@@ -12,19 +12,20 @@ using Tournament = Tournaments.Model.Tournament;
 
 namespace Tournaments.Tests
 {
-    public class TournamentTests: IClassFixture<WebApplicationFactory<Startup>>
+    public class TournamentTests : IClassFixture<ClientUtils>
     {
-        private readonly WebApplicationFactory<Startup> _factory;
-
-        public TournamentTests(WebApplicationFactory<Startup> factory)
+        private ClientUtils _clientUtils;
+        private HttpClient _client;
+        public TournamentTests(ClientUtils clientUtils)
         {
-            _factory = factory;
+            _clientUtils = clientUtils;
+            _client = _clientUtils.Client;
         }
 
         [Fact]
         public async Task Create_Tournament_Should_Return_Valid_Id()
         {
-            var response = await TournamentUtils.CreateTournament("Unreal tournament", _factory);
+            var response = await TournamentUtils.CreateTournament("Unreal tournament",_client);
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
             Assert.NotNull(response.Content?.Id);
@@ -37,8 +38,8 @@ namespace Tournaments.Tests
         {
             var tournamentName = "New Tournament";
 
-            var response = await TournamentUtils.CreateTournament(tournamentName, _factory);
-            var tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _factory);
+            var response = await TournamentUtils.CreateTournament(tournamentName,_client);
+            var tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id,_client);
 
             Assert.Equal(HttpStatusCode.OK, tournamentResponse.StatusCode);
             Assert.NotNull(tournamentResponse.Content);
@@ -72,12 +73,11 @@ namespace Tournaments.Tests
             data.Equipes.Add(equipe);
             data.Equipes.Add(equipe2);
 
-            var response = await TournamentUtils.CreateTournament(tournamentName, _factory);
-            var tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _factory);
+            var response = await TournamentUtils.CreateTournament(tournamentName,_client);
+            var tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _client);
 
-            var addParticipants = await TournamentUtils.AddEquipesToTournament(response.Content.Id, data
-               , _factory);
-             tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _factory);
+            var addParticipants = await TournamentUtils.AddEquipesToTournament(response.Content.Id, data, _client);
+             tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _client);
             Assert.Equal(HttpStatusCode.OK, tournamentResponse.StatusCode);
             Assert.NotNull(tournamentResponse.Content);
             var tournament = tournamentResponse.Content;
@@ -104,17 +104,26 @@ namespace Tournaments.Tests
             data.Equipes.Add(equipe);
    
 
-            var response = await TournamentUtils.CreateTournament(tournamentName, _factory);
-            var tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _factory);
+            var response = await TournamentUtils.CreateTournament(tournamentName, _client);
+            var tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _client);
 
-            var addParticipants = await TournamentUtils.AddEquipesToTournament(response.Content.Id, data
-                , _factory);
-            tournamentResponse = await TournamentUtils.GetTournament(response.Content.Id, _factory);
-            Assert.Equal(HttpStatusCode.OK, tournamentResponse.StatusCode);
+            var addParticipants = await TournamentUtils.AddEquipesToTournament(response.Content.Id, data, _client);
+            var tournament = addParticipants.Content;
+            Assert.Equal(HttpStatusCode.OK, addParticipants.StatusCode);
             Assert.NotNull(tournamentResponse.Content);
-            var tournament = tournamentResponse.Content;
+         
             Assert.NotNull(tournament.Equipes);
-            Assert.Equal(2, tournament.Equipes.Count);
+            Assert.Equal(1, tournament.Equipes.Count);
+
+
+            var removeParticipants =
+                await TournamentUtils.RemoveEquipeFromTournament(response.Content.Id, "Equipe1", _client);
+            tournament = removeParticipants.Content;
+            Assert.Equal(HttpStatusCode.OK, addParticipants.StatusCode);
+            Assert.NotNull(tournamentResponse.Content);
+
+            Assert.NotNull(tournament.Equipes);
+            Assert.Equal(0, tournament.Equipes.Count);
         }
     }
 }

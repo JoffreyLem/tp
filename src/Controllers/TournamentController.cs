@@ -4,6 +4,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Tournaments.Model;
 using Tournaments.Services;
+using Tournaments.Services.Tournament;
 
 namespace Tournaments.Controllers
 {
@@ -11,12 +12,14 @@ namespace Tournaments.Controllers
     [Route("api/[controller]s")]
     public class TournamentController: ControllerBase
     {
-        private readonly TournamentRepository _tournamentRepository;
 
-        public TournamentController(TournamentRepository tournamentRepository)
+        private ITournamentRepository _tournamentRepository { get; set; }
+        public TournamentController(ITournamentRepository tournamentRepository)
+
         {
             _tournamentRepository = tournamentRepository;
         }
+     
 
         [HttpPost]
         public IActionResult CreateTournament([FromBody] TournamentToCreate tournament)
@@ -36,17 +39,19 @@ namespace Tournaments.Controllers
         {
           
             var tournament = _tournamentRepository.GetTournament(id);
+            
             if (tournament == null)
             {
-                return NotFound();
+                return NotFound("pas trouvé");
             }
             tournament.Equipes.AddRange(participants.Equipes);
+            _tournamentRepository.UpdateTournament(tournament);
             return Content(JsonSerializer.Serialize(tournament));
 
         }
 
-        [HttpPut("/removeEquipe/{id}")]
-        public IActionResult RemoveEquipeFromTournament(string id, [FromQuery] string equipe)
+        [HttpPatch("{id}")]
+        public IActionResult RemoveEquipeFromTournament(string id, [FromBody] string equipe)
         {
 
             var tournament = _tournamentRepository.GetTournament(id);
@@ -60,6 +65,7 @@ namespace Tournaments.Controllers
             {
                 tournament.Equipes.Remove(selected);
             }
+            _tournamentRepository.UpdateTournament(tournament);
             return Content(JsonSerializer.Serialize(tournament));
 
         }
