@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tournaments.Model;
 
 namespace Tournaments.DataAccess
 {
@@ -14,6 +15,10 @@ namespace Tournaments.DataAccess
         {
 
         }
+
+        public DbSet<Equipes> Equipes { get; set; }
+        public DbSet<Participants> Participants { get; set; }
+        public DbSet<Tournament> Tournaments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
